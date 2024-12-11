@@ -1,0 +1,23 @@
+services:
+  apppy:
+    build:
+      context: ./apppy
+      dockerfile: Dockerfile
+    links:
+      - "mariadb"
+    networks:
+      net-tp4:
+
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: foo
+    volumes:
+      - './mariadb/bdd:/var/lib/mysql'
+    ports:
+      - 3307:3306
+    networks:
+      net-tp4:
+networks:
+  net-tp4:
+    driver: bridge
