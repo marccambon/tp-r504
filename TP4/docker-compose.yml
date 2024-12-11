@@ -10,14 +10,20 @@ services:
 
   mariadb:
     image: mariadb
+    container_name: mariadb
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
     environment:
       MARIADB_ROOT_PASSWORD: foo
     volumes:
-      - './mariadb/bdd:/var/lib/mysql'
+      - './mariadb/vol-sql-demo:/var/lib/mysql'
     ports:
       - 3307:3306
     networks:
       net-tp4:
+
+
 networks:
   net-tp4:
     driver: bridge
