@@ -1,29 +1,32 @@
 services:
-  apppy:
-    build:
-      context: ./apppy
-      dockerfile: Dockerfile
-    links:
-      - "mariadb"
-    networks:
-      net-tp4:
 
   mariadb:
     image: mariadb
     container_name: mariadb
-    build:
-      context: ./mariadb
-      dockerfile: Dockerfile
     environment:
       MARIADB_ROOT_PASSWORD: foo
-    volumes:
-      - './mariadb/vol-sql-demo:/var/lib/mysql'
+    healthcheck:
+      test: ["CMD-SHELL", "ss -lnpt | grep 3306"]
+      interval: 2s
+      retries: 20
+      start_period: 5s
+      timeout: 5s
     ports:
       - 3307:3306
     networks:
-      net-tp4:
+      - net_tp4
 
+  apppy:
+    container_name: apppy
+    build:
+      context: ./apppy
+      dockerfile: Dockerfile
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - net_tp4
 
 networks:
-  net-tp4:
+  net_tp4:
     driver: bridge
