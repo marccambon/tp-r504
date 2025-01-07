@@ -1,8 +1,8 @@
 FROM python:3.11
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
-COPY . .
+RUN mkdir /srv/app1
+WORKDIR /srv/app1
+COPY ./requirements.txt /srv/app1
 
 RUN apt update && apt install default-mysql-client -yy
 RUN pip install --no-cache-dir -r requirements.txt

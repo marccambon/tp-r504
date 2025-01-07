@@ -1,0 +1,1 @@
+docker build ../apppy/app_data -t im-tp4
