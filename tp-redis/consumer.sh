@@ -10,7 +10,7 @@ do
 		then
 			if [$value -gt $tresh]
 			then
-				
+				sleep 4
 			fi
 		fi
 	fi
